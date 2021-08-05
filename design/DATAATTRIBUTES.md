@@ -4,16 +4,12 @@
 * User Id
 * User contact information
 * User role
-* Actor name
-* Actor role
-* Actor race
-* Actor class
-* Actor skills
-* Actor age
-* Actor description
-* Actor abilities
-* Attribute value
-* Race name
-* Race description
-* Race abilities
-* Race skills
+* Group name
+* Group members
+* Role name
+* Role permissions
+* Role description
+* Group description
+* Object Class name
+* Object Class description
+* Object Class definition
