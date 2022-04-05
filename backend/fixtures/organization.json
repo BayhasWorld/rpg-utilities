@@ -1,0 +1,11 @@
+/home/mbayha/development/rpgutilities/backend
+/home/mbayha/development/rpgutilities/backend/static
+[
+{
+    "model": "api.organization",
+    "pk": "f9205499-43f7-47c6-ac83-356d1586a3da",
+    "fields": {
+        "abbreviation": null
+    }
+}
+]
