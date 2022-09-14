@@ -1,11 +1,9 @@
-/home/mbayha/development/rpgutilities/backend
-/home/mbayha/development/rpgutilities/backend/static
 [
 {
     "model": "auth.user",
     "pk": 1,
     "fields": {
-        "password": "pbkdf2_sha256$216000$SaYS239QYX9q$AcSXJfRaOs02b4EzisedXyQQe3dES232QEoCtDPvmFE=",
+        "password": "pbkdf2_sha256$216000$5q3mpTO9KNY5$uwv0C6pc3EanfiQyuK7I8gYHLbASMDiFAXfuI5fUe3M=",
         "last_login": null,
         "is_superuser": true,
         "username": "admin",
@@ -14,7 +12,7 @@
         "email": "admin@bayhasworld.com",
         "is_staff": true,
         "is_active": true,
-        "date_joined": "2022-04-05T06:38:25.607Z",
+        "date_joined": "2022-09-14T04:20:21.093Z",
         "groups": [],
         "user_permissions": []
     }
@@ -23,7 +21,7 @@
     "model": "auth.user",
     "pk": 2,
     "fields": {
-        "password": "pbkdf2_sha256$216000$0S8Ni6d2aXiG$GCFjmGYiMQBZtgDeGBhO7B/FmtGKsZQLvEA1S+iCmT0=",
+        "password": "pbkdf2_sha256$216000$AxS0oosji1UZ$Q36UJ5VdeUyM0EJ8l3Byr2bW8UvkOihM4Hcnnv3S804=",
         "last_login": null,
         "is_superuser": false,
         "username": "read-only",
@@ -32,7 +30,7 @@
         "email": "ro@bayhasworld.com",
         "is_staff": false,
         "is_active": true,
-        "date_joined": "2022-04-05T06:38:26.371Z",
+        "date_joined": "2022-09-14T04:20:22.039Z",
         "groups": [],
         "user_permissions": []
     }

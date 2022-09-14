@@ -260,7 +260,7 @@ SIMPLE_JWT = {
 # django-rest-swagger settings
 SWAGGER_SETTINGS = {
     'exclude_namespaces': [],  # List URL namespaces to ignore
-    'api_version': '0.1',  # Specify your API's version
+    'api_version': '1.0.0',  # Specify your API's version
     'api_path': '/',  # Specify the path to your API not a root level
     'enabled_methods': [  # Specify which methods to enable in Swagger UI
         'get',
@@ -281,7 +281,8 @@ SWAGGER_SETTINGS = {
     },
     'JSON_EDITOR': True,
     'OPERATIONS_SORTER': 'alpha',
-    'SHOW_REQUEST_HEADERS': True
+    'SHOW_REQUEST_HEADERS': True,
+    'VALIDATOR_URL': 'http://online.swagger.io/validator/'
 }
 
 REDOC_SETTINGS = {

@@ -7,9 +7,9 @@ from django.test import tag
 from api.tests.base import RpgtApiBTC
 from api.tests.base import ADMIN_USER
 from api.tests.base import API_URL
-from api.tests.base import CODES
+from api.tests.base import RESPONSE_CODES
 from api.tests.base import RO_USER
-from api.tests.base import T_URL
+from api.tests.base import TOKEN_URL
 
 MODEL_URL = API_URL + 'persons'
 POST_URL = MODEL_URL + '/'
@@ -75,14 +75,13 @@ REQUEST_DATA_PUT = {
     "url": "https://rpggeek.com/rpgdesigner/19436/jay-adan"
 }
 
-
 @tag("person_admin")
 class TestAdmin(RpgtApiBTC):
     """
     Defines person test case class
     """
     fixtures = FIXTURES
-    token = RpgtApiBTC.rpgu_api_cli.post(T_URL,
+    token = RpgtApiBTC.rpgu_api_cli.post(TOKEN_URL,
                                          ADMIN_USER,
                                          format="json").json()["access"]
 
@@ -94,7 +93,7 @@ class TestAdmin(RpgtApiBTC):
         response = self.rpgu_api_cli.get(MODEL_URL,
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(len(response.json()), GET_COUNT)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_get_item_id(self):
         """
@@ -103,7 +102,7 @@ class TestAdmin(RpgtApiBTC):
         response = self.rpgu_api_cli.get(POST_URL + INSTANCE_ID,
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['id'], INSTANCE_ID)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_get_item_id_history(self):
         """
@@ -112,7 +111,7 @@ class TestAdmin(RpgtApiBTC):
         response = self.rpgu_api_cli.get(POST_URL + INSTANCE_ID + '/history',
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertTrue(response.json())
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_post_item(self):
         """
@@ -123,7 +122,7 @@ class TestAdmin(RpgtApiBTC):
                                           format="json",
                                           HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['id'], CREATE_TEST_VALUE)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_full_item(self):
         """
@@ -134,7 +133,7 @@ class TestAdmin(RpgtApiBTC):
                                           format="json",
                                           HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['id'], CREATE_TEST_VALUE_FULL)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_duplicate_item(self):
         """
@@ -145,7 +144,7 @@ class TestAdmin(RpgtApiBTC):
                                           REQUEST_DATA_CREATE_DUPLICATE,
                                           format="json",
                                           HTTP_AUTHORIZATION=f"Bearer {self.token}")
-        self.assertEqual(response.status_code, CODES["bad_request"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["bad_request"])
 
     def test_patch_item(self):
         """
@@ -156,7 +155,7 @@ class TestAdmin(RpgtApiBTC):
                                            format="json",
                                            HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['description'], TEST_VALUE)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_put_item(self):
         """
@@ -167,7 +166,7 @@ class TestAdmin(RpgtApiBTC):
                                          format="json",
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['description'], TEST_VALUE)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_delete_item(self):
         """
@@ -175,8 +174,7 @@ class TestAdmin(RpgtApiBTC):
         """
         response = self.rpgu_api_cli.delete(DELETE_URL + INSTANCE_ID,
                                             HTTP_AUTHORIZATION=f"Bearer {self.token}")
-        self.assertEqual(response.status_code, CODES["deleted"])
-
+        self.assertEqual(response.status_code, RESPONSE_CODES["deleted"])
 
 @tag("person_readonly")
 class TestReadOnly(RpgtApiBTC):
@@ -184,7 +182,7 @@ class TestReadOnly(RpgtApiBTC):
     Defines person test case class
     """
     fixtures = FIXTURES
-    token = RpgtApiBTC.rpgu_api_cli.post(T_URL,
+    token = RpgtApiBTC.rpgu_api_cli.post(TOKEN_URL,
                                          RO_USER,
                                          format="json").json()["access"]
 
@@ -197,7 +195,7 @@ class TestReadOnly(RpgtApiBTC):
         response = self.rpgu_api_cli.get(MODEL_URL,
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(len(response.json()), GET_COUNT)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_get_item_id(self):
         """
@@ -207,7 +205,7 @@ class TestReadOnly(RpgtApiBTC):
         response = self.rpgu_api_cli.get(POST_URL + INSTANCE_ID,
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['id'], INSTANCE_ID)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_get_item_id_history(self):
         """
@@ -217,7 +215,7 @@ class TestReadOnly(RpgtApiBTC):
         response = self.rpgu_api_cli.get(POST_URL + INSTANCE_ID + '/history',
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertTrue(response.json())
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_post_item(self):
         """
@@ -228,7 +226,7 @@ class TestReadOnly(RpgtApiBTC):
                                           REQUEST_DATA_CREATE,
                                           format="json",
                                           HTTP_AUTHORIZATION=f"Bearer {self.token}")
-        self.assertEqual(response.status_code, CODES["no_permission"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["no_permission"])
 
     def test_patch_item(self):
         """
@@ -239,7 +237,7 @@ class TestReadOnly(RpgtApiBTC):
                                            REQUEST_DATA_PATCH,
                                            format="json",
                                            HTTP_AUTHORIZATION=f"Bearer {self.token}")
-        self.assertEqual(response.status_code, CODES["no_permission"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["no_permission"])
 
     def test_put_item(self):
         """
@@ -250,7 +248,7 @@ class TestReadOnly(RpgtApiBTC):
                                          REQUEST_DATA_PUT,
                                          format="json",
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
-        self.assertEqual(response.status_code, CODES["no_permission"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["no_permission"])
 
     def test_delete_item(self):
         """
@@ -259,8 +257,7 @@ class TestReadOnly(RpgtApiBTC):
         """
         response = self.rpgu_api_cli.delete(DELETE_URL + INSTANCE_ID,
                                             HTTP_AUTHORIZATION=f"Bearer {self.token}")
-        self.assertEqual(response.status_code, CODES["no_permission"])
-
+        self.assertEqual(response.status_code, RESPONSE_CODES["no_permission"])
 
 @tag("person_anonymous")
 class TestAnonymous(RpgtApiBTC):
@@ -277,7 +274,7 @@ class TestAnonymous(RpgtApiBTC):
         """
         response = self.rpgu_api_cli.get(MODEL_URL)
         self.assertEqual(len(response.json()), GET_COUNT)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_get_item_id(self):
         """
@@ -286,7 +283,7 @@ class TestAnonymous(RpgtApiBTC):
         """
         response = self.rpgu_api_cli.get(POST_URL + INSTANCE_ID)
         self.assertEqual(response.json()['id'], INSTANCE_ID)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_get_item_id_history(self):
         """
@@ -295,7 +292,7 @@ class TestAnonymous(RpgtApiBTC):
         """
         response = self.rpgu_api_cli.get(POST_URL + INSTANCE_ID + '/history')
         self.assertTrue(response.json())
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_post_item(self):
         """
@@ -305,7 +302,7 @@ class TestAnonymous(RpgtApiBTC):
         response = self.rpgu_api_cli.post(POST_URL,
                                           REQUEST_DATA_CREATE,
                                           format="json")
-        self.assertEqual(response.status_code, CODES["no_creds"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["no_creds"])
 
     def test_patch_item(self):
         """
@@ -315,7 +312,7 @@ class TestAnonymous(RpgtApiBTC):
         response = self.rpgu_api_cli.patch(EDIT_URL + INSTANCE_ID,
                                            REQUEST_DATA_PATCH,
                                            format="json")
-        self.assertEqual(response.status_code, CODES["no_creds"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["no_creds"])
 
     def test_put_item(self):
         """
@@ -325,7 +322,7 @@ class TestAnonymous(RpgtApiBTC):
         response = self.rpgu_api_cli.put(EDIT_URL + INSTANCE_ID,
                                          REQUEST_DATA_PUT,
                                          format="json")
-        self.assertEqual(response.status_code, CODES["no_creds"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["no_creds"])
 
     def test_delete_item(self):
         """
@@ -333,4 +330,4 @@ class TestAnonymous(RpgtApiBTC):
         Uses anonymouse access
         """
         response = self.rpgu_api_cli.delete(DELETE_URL + INSTANCE_ID)
-        self.assertEqual(response.status_code, CODES["no_creds"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["no_creds"])
