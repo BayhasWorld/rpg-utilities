@@ -7,9 +7,9 @@ from django.test import tag
 from api.tests.base import RpgtApiBTC
 from api.tests.base import ADMIN_USER
 from api.tests.base import API_URL
-from api.tests.base import CODES
+from api.tests.base import RESPONSE_CODES
 from api.tests.base import RO_USER
-from api.tests.base import T_URL
+from api.tests.base import TOKEN_URL
 
 MODEL_URL = API_URL + 'die-roll'
 
@@ -182,14 +182,13 @@ REQUEST_DATA_ROLL_MOD_DIV = {
     }
 }
 
-
 @tag("die_roll_admin")
 class TestAdmin(RpgtApiBTC):
     """
     Defines die_roll test case class
     """
     fixtures = FIXTURES
-    token = RpgtApiBTC.rpgu_api_cli.post(T_URL,
+    token = RpgtApiBTC.rpgu_api_cli.post(TOKEN_URL,
                                          ADMIN_USER,
                                          format="json").json()["access"]
 
@@ -203,8 +202,7 @@ class TestAdmin(RpgtApiBTC):
                                           format="json",
                                           HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['roll'], 0)
-        self.assertEqual(response.status_code, CODES["created"])
-
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
 @tag("die_roll_readonly")
 class TestReadOnly(RpgtApiBTC):
@@ -212,7 +210,7 @@ class TestReadOnly(RpgtApiBTC):
     Defines die_roll test case class
     """
     fixtures = FIXTURES
-    token = RpgtApiBTC.rpgu_api_cli.post(T_URL,
+    token = RpgtApiBTC.rpgu_api_cli.post(TOKEN_URL,
                                          RO_USER,
                                          format="json").json()["access"]
 
@@ -225,8 +223,7 @@ class TestReadOnly(RpgtApiBTC):
                                           format="json",
                                           HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['roll'], 0)
-        self.assertEqual(response.status_code, CODES["created"])
-
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
 @tag("die_roll_anonymous")
 class TestAnonymous(RpgtApiBTC):
@@ -242,7 +239,7 @@ class TestAnonymous(RpgtApiBTC):
                                           REQUEST_DATA_ZEROES,
                                           format="json")
         self.assertEqual(response.json()['roll'], 0)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_basic(self):
         """
@@ -253,7 +250,7 @@ class TestAnonymous(RpgtApiBTC):
                                           format="json")
         self.assertGreaterEqual(response.json()['roll'], 3)
         self.assertLessEqual(response.json()['roll'], 18)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_roll_mod(self):
         """
@@ -264,7 +261,7 @@ class TestAnonymous(RpgtApiBTC):
                                           format="json")
         self.assertGreaterEqual(response.json()['roll'], 6)
         self.assertLessEqual(response.json()['roll'], 21)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_per_mod(self):
         """
@@ -275,7 +272,7 @@ class TestAnonymous(RpgtApiBTC):
                                           format="json")
         self.assertGreaterEqual(response.json()['roll'], 12)
         self.assertLessEqual(response.json()['roll'], 27)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_post_mod(self):
         """
@@ -286,7 +283,7 @@ class TestAnonymous(RpgtApiBTC):
                                           format="json")
         self.assertGreaterEqual(response.json()['roll'], 300)
         self.assertLessEqual(response.json()['roll'], 1800)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_per_roll_mod(self):
         """
@@ -297,7 +294,7 @@ class TestAnonymous(RpgtApiBTC):
                                           format="json")
         self.assertGreaterEqual(response.json()['roll'], 9)
         self.assertLessEqual(response.json()['roll'], 24)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_per_post_mod(self):
         """
@@ -308,7 +305,7 @@ class TestAnonymous(RpgtApiBTC):
                                           format="json")
         self.assertGreaterEqual(response.json()['roll'], 60)
         self.assertLessEqual(response.json()['roll'], 210)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_roll_post_mod(self):
         """
@@ -319,7 +316,7 @@ class TestAnonymous(RpgtApiBTC):
                                           format="json")
         self.assertGreaterEqual(response.json()['roll'], 60)
         self.assertLessEqual(response.json()['roll'], 210)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_per_roll_post_mod(self):
         """
@@ -330,7 +327,7 @@ class TestAnonymous(RpgtApiBTC):
                                           format="json")
         self.assertGreaterEqual(response.json()['roll'], 90)
         self.assertLessEqual(response.json()['roll'], 240)
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_roll_mod_reroll_eq(self):
         """
@@ -342,7 +339,7 @@ class TestAnonymous(RpgtApiBTC):
                                               format="json")
             self.assertGreaterEqual(response.json()['roll'], 1)
             self.assertLessEqual(response.json()['roll'], 20)
-            self.assertEqual(response.status_code, CODES["created"])
+            self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_roll_mod_reroll_lteq(self):
         """
@@ -354,7 +351,7 @@ class TestAnonymous(RpgtApiBTC):
                                               format="json")
             self.assertGreaterEqual(response.json()['roll'], 1)
             self.assertLessEqual(response.json()['roll'], 20)
-            self.assertEqual(response.status_code, CODES["created"])
+            self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_roll_mod_reroll_lt(self):
         """
@@ -366,7 +363,7 @@ class TestAnonymous(RpgtApiBTC):
                                               format="json")
             self.assertGreaterEqual(response.json()['roll'], 1)
             self.assertLessEqual(response.json()['roll'], 20)
-            self.assertEqual(response.status_code, CODES["created"])
+            self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_roll_mod_reroll_gteq(self):
         """
@@ -378,7 +375,7 @@ class TestAnonymous(RpgtApiBTC):
                                               format="json")
             self.assertGreaterEqual(response.json()['roll'], 1)
             self.assertLessEqual(response.json()['roll'], 20)
-            self.assertEqual(response.status_code, CODES["created"])
+            self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_roll_mod_reroll_gt(self):
         """
@@ -390,7 +387,7 @@ class TestAnonymous(RpgtApiBTC):
                                               format="json")
             self.assertGreaterEqual(response.json()['roll'], 1)
             self.assertLessEqual(response.json()['roll'], 20)
-            self.assertEqual(response.status_code, CODES["created"])
+            self.assertEqual(response.status_code, RESPONSE_CODES["created"])
 
     def test_post_roll_mod_div(self):
         """
@@ -401,4 +398,4 @@ class TestAnonymous(RpgtApiBTC):
                                               REQUEST_DATA_ROLL_MOD_DIV,
                                               format="json")
             self.assertEqual(type(response.json()['roll']), type(1))
-            self.assertEqual(response.status_code, CODES["created"])
+            self.assertEqual(response.status_code, RESPONSE_CODES["created"])

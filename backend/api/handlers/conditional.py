@@ -5,7 +5,7 @@ Defines the conditional handler
 """
 from api.handlers import die_roll
 from api.handlers import calculation  # pylint: disable=cyclic-import
-from api.handlers import table
+from api.handlers import table  # pylint: disable=cyclic-import
 
 OPERATORS = ['==',
              '<=',

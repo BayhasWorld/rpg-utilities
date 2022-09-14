@@ -18,9 +18,9 @@ RO_USER = {
 
 API_URL = '/api/v1/'
 
-T_URL = API_URL + 'token'
+TOKEN_URL = API_URL + 'token'
 
-CODES = {
+RESPONSE_CODES = {
     "success": 200,
     "created": 201,
     "deleted": 204,
@@ -29,7 +29,6 @@ CODES = {
     "no_creds": 401,
     "no_permission": 403
 }
-
 
 @override_settings(AUTHENTICATION_BACKENDS=('django.contrib.auth.backends.ModelBackend',))
 class RpgtApiBTC(TestCase):

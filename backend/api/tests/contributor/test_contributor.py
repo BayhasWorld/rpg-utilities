@@ -7,8 +7,8 @@ from django.test import tag
 from api.tests.base import RpgtApiBTC
 from api.tests.base import ADMIN_USER
 from api.tests.base import API_URL
-from api.tests.base import CODES
-from api.tests.base import T_URL
+from api.tests.base import RESPONSE_CODES
+from api.tests.base import TOKEN_URL
 
 MODEL_URL = API_URL + 'contributors'
 POST_URL = MODEL_URL + '/'
@@ -21,14 +21,13 @@ GET_COUNT = 65
 FIXTURES = ['test_users',
             'test_contributor.json']
 
-
 @tag("contributor_admin")
 class TestAdmin(RpgtApiBTC):
     """
     Defines contributor test case class
     """
     fixtures = FIXTURES
-    token = RpgtApiBTC.rpgu_api_cli.post(T_URL,
+    token = RpgtApiBTC.rpgu_api_cli.post(TOKEN_URL,
                                          ADMIN_USER,
                                          format="json").json()["access"]
 
@@ -40,7 +39,7 @@ class TestAdmin(RpgtApiBTC):
         response = self.rpgu_api_cli.get(MODEL_URL,
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(len(response.json()), GET_COUNT)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_get_item_id(self):
         """
@@ -49,8 +48,7 @@ class TestAdmin(RpgtApiBTC):
         response = self.rpgu_api_cli.get(POST_URL + INSTANCE_ID,
                                          HTTP_AUTHORIZATION=f"Bearer {self.token}")
         self.assertEqual(response.json()['id'], INSTANCE_ID)
-        self.assertEqual(response.status_code, CODES["success"])
-
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
 @tag("contributor_anonymous")
 class TestAnonymous(RpgtApiBTC):
@@ -67,7 +65,7 @@ class TestAnonymous(RpgtApiBTC):
         """
         response = self.rpgu_api_cli.get(MODEL_URL)
         self.assertEqual(len(response.json()), GET_COUNT)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])
 
     def test_get_item_id(self):
         """
@@ -76,4 +74,4 @@ class TestAnonymous(RpgtApiBTC):
         """
         response = self.rpgu_api_cli.get(POST_URL + INSTANCE_ID)
         self.assertEqual(response.json()['id'], INSTANCE_ID)
-        self.assertEqual(response.status_code, CODES["success"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["success"])

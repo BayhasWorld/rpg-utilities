@@ -4,15 +4,14 @@
 """
 from django.test import tag
 from api.tests.base import RpgtApiBTC
-from api.tests.base import API_URL
-from api.tests.base import CODES
+from api.tests.base import RESPONSE_CODES
 from api.tests.base import RO_USER
-from api.tests.base import T_URL
+from api.tests.base import TOKEN_URL
+from api.tests.action_runner.base import MODEL_URL
+from api.tests.action_runner.base import ATTRIBUTE_RANGE
 
-MODEL_URL = API_URL + 'action-runner'
 
 FIXTURES = ['test_users']
-
 
 @tag("action_runner_readonly")
 class TestPost(RpgtApiBTC):
@@ -21,11 +20,11 @@ class TestPost(RpgtApiBTC):
 
     Attributes:
         JSON_INPUT [Static]: The json package to post to the target url
-        ATTR_RANGE [Static]: Value range for some of the assertions involving
+        ATTRIBUTE_RANGE [Static]: Value range for some of the assertions involving
                              a specific value range.
     """
     fixtures = FIXTURES
-    token = RpgtApiBTC.rpgu_api_cli.post(T_URL,
+    token = RpgtApiBTC.rpgu_api_cli.post(TOKEN_URL,
                                          RO_USER,
                                          format="json").json()["access"]
 
@@ -129,8 +128,6 @@ class TestPost(RpgtApiBTC):
             }
         ]
     }
-    ATTR_RANGE = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
-                  11, 12, 13, 14, 15, 16, 17, 18, 19, 20]
 
     def test_run(self):
         # TODO: update docstring
@@ -140,17 +137,17 @@ class TestPost(RpgtApiBTC):
                                           self.JSON_INPUT,
                                           format="json",
                                           HTTP_AUTHORIZATION=f"Bearer {self.token}")
-        self.assertEqual(response.status_code, CODES["created"])
+        self.assertEqual(response.status_code, RESPONSE_CODES["created"])
         self.assertTrue(response.json())
         self.assertTrue(response.json()['Fitness'])
-        self.assertIn(response.json()['Fitness'], self.ATTR_RANGE)
+        self.assertIn(response.json()['Fitness'], ATTRIBUTE_RANGE)
         self.assertTrue(response.json()['Agility'])
-        self.assertIn(response.json()['Agility'], self.ATTR_RANGE)
+        self.assertIn(response.json()['Agility'], ATTRIBUTE_RANGE)
         self.assertTrue(response.json()['Constitution'])
-        self.assertIn(response.json()['Constitution'], self.ATTR_RANGE)
+        self.assertIn(response.json()['Constitution'], ATTRIBUTE_RANGE)
         self.assertTrue(response.json()['Stature'])
-        self.assertIn(response.json()['Stature'], self.ATTR_RANGE)
+        self.assertIn(response.json()['Stature'], ATTRIBUTE_RANGE)
         self.assertTrue(response.json()['Intelligence'])
-        self.assertIn(response.json()['Intelligence'], self.ATTR_RANGE)
+        self.assertIn(response.json()['Intelligence'], ATTRIBUTE_RANGE)
         self.assertTrue(response.json()['Education'])
-        self.assertIn(response.json()['Education'], self.ATTR_RANGE)
+        self.assertIn(response.json()['Education'], ATTRIBUTE_RANGE)
