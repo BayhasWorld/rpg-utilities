@@ -1,0 +1,12 @@
+{% load static %}
+<html>
+<head>
+    <title>{% block subtitle %}{% endblock %} - RPG Utilities</title>
+    <script src="{% static 'js/jquery-3.6.1.js' %}" type="text/javascript"></script>
+    <script src="{% static 'js/rpgutilities.js' %}" type="text/javascript"></script>
+</head>    
+<body>
+{% block body %}
+{% endblock %}
+</body>
+</html>

@@ -10,6 +10,7 @@ init:
 	mkdir -p logs
 	rm -f db.sqlite3
 	rm -f ./api/migrations/0001_initial.py
+	rm -f ./ui/migrations/0001_initial.py
 	python -m pip install -r  requirements.txt
 
 static:
@@ -20,6 +21,7 @@ migrate:
 	python manage.py migrate -v 0
 
 import:
+	echo "Importing Data from fixtures"
 	python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_superuser('admin', 'admin@bayhasworld.com', 'adminpass',first_name='admin',last_name='admin')"
 	python manage.py shell -c "from django.contrib.auth.models import User; User.objects.create_user('read-only', 'ro@bayhasworld.com', 'ropassword',first_name='read',last_name='only')"
 	python manage.py loaddata -v 0 ./fixtures/publisher.json
@@ -33,8 +35,10 @@ import:
 	python manage.py loaddata -v 0 ./fixtures/workflow.json
 	python manage.py loaddata -v 0 ./fixtures/token.json
 	python manage.py populate_history -v 0 --auto
+	echo "Import complete"
 
 dumpdata:
+	echo "Dumpging Data to fixtures"
 	python manage.py dumpdata -v 0 auth.User --indent 4 | grep -v Fetch > ./fixtures/users.json
 	python manage.py dumpdata api.contributor --indent 4 | grep -v Fetch > ./fixtures/contributor.json
 	python manage.py dumpdata api.organization --indent 4 | grep -v Fetch > ./fixtures/organization.json
@@ -46,6 +50,7 @@ dumpdata:
 	python manage.py dumpdata api.game --indent 4 | grep -v Fetch > ./fixtures/game.json
 	python manage.py dumpdata api.workflow --indent 4 | grep -v Fetch > ./fixtures/workflow.json
 	python manage.py dumpdata authtoken.token --indent 4 | grep -v Fetch > ./fixtures/token.json
+	echo "Export complete"
 
 lint:
 	pylint api --ignore=migrations,settings.py,urls.py --disable=R0801,W0511

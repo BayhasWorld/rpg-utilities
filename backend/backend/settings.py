@@ -27,7 +27,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get("SECRET_KEY", default="foo")
-    
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = int(os.environ.get("DEBUG", default=0))
 
@@ -37,8 +37,8 @@ ALLOWED_HOSTS = os.environ.get("DJANGO_ALLOWED_HOSTS",
                                     .split(' ')
 
 INTERNAL_IPS = os.environ.get("INTERNAL_IPS", 
-                              default="127.0.0.1 192.168.0.35 192.168.0.45") \
-                                  .split(' ')
+                            default="127.0.0.1 192.168.0.35 192.168.0.45") \
+                            .split(' ')
 
 logfile = "logs/rpgu-backend.log"
 
@@ -80,10 +80,10 @@ LOGGING = {
     }
 }
 
-
 # Add-on Application definition
 MY_INSTALLED_APPS = [
     'api',
+    'ui',
     'markdownx',
     'rest_framework',
     'rest_framework.authtoken',
@@ -165,6 +165,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 #         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
 #     }
 # }
+
 DATABASES = {
     "default": {
         "ENGINE": os.environ.get("SQL_ENGINE", "django.db.backends.sqlite3"),
@@ -176,10 +177,8 @@ DATABASES = {
     }
 }
 
-
 # Password validation
 # https://docs.djangoproject.com/en/2.2/ref/settings/#auth-password-validators
-
 AUTH_PASSWORD_VALIDATORS = [
     {
         'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator',
@@ -195,7 +194,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 # Internationalization
 # https://docs.djangoproject.com/en/2.2/topics/i18n/
 
@@ -208,14 +206,12 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
+STATIC_URL = "static/"
+STATICFILES_DIRS = [BASE_DIR + "/static"]
+STATIC_ROOT = STATIC_ROOT = BASE_DIR + "/staticfiles"
+STATICFILES_STORAGE = "django.contrib.staticfiles.storage.StaticFilesStorage"
 
-# STATICFILES_DIRS = [
-#     os.path.join(BASE_DIR, "vue"),
-# ]
-STATIC_URL = '/static/'
-
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
-
+# Rest Framework Settings
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema',
     'DEFAULT_RENDERER_CLASSES': ('rest_framework.renderers.JSONRenderer',),
@@ -289,7 +285,7 @@ REDOC_SETTINGS = {
     'EXPAND_RESPONSES': '200,201,400'
 }
 
-# # simplehistory settings
+# simplehistory settings
 SIMPLE_HISTORY_HISTORY_ID_USE_UUID = True
 SIMPLE_HISTORY_HISTORY_CHANGE_REASON_USE_TEXT_FIELD = True
 
